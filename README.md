@@ -32,6 +32,6 @@ curl http://localhost:8080/messages
 curl http://localhost:8080/messages/{msgID}
 
 4. To store new message <br>
-curl http://localhost:8080/messages/ -d ""my name is Mehdi and I like Golang"
+curl http://localhost:8080/messages/ -d "my name is Mehdi and I like Golang"
 
 
