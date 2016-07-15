@@ -17,16 +17,17 @@ import (
 )
 
 /*
- * Function IndexHandler for the endpoint "/"
+ * Function IndexHandler for the endpoint "" after domain
  * http.Request is a data structure that represents the client HTTP request
  * http.ResponseWriter is the response at any request
  */
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello World !")
+	fmt.Fprintln(w, "\nHello World !")
 }
 
 /*
- * Function IndexMessagesHandler for the endpoint "/"
+ * Function IndexMessagesHandler for the endpoint "/test" after "domain"
+ * returns all mockup messages
  * http.Request is a data structure that represents the client HTTP request
  * http.ResponseWriter is the response at any request
  */
@@ -35,13 +36,14 @@ func IndexMessagesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	// Encode the messages to send back some JSON to the client
-	if err := json.NewEncoder(w).Encode(listMessages); err != nil {
+	if err := json.NewEncoder(w).Encode(mockupMessages); err != nil {
 		panic(err)
 	}
 }
 
 /*
- * Function MessagesHandler for the endpoint "/messages"
+ * Function MessagesHandler for the endpoint "/messages" after "domain"
+ * This function lists all messages
  * http.Request is a data structure that represents the client HTTP request
  * http.ResponseWriter is the response at any request
  */
@@ -62,7 +64,7 @@ func MessagesHandler(w http.ResponseWriter, r *http.Request) {
  * http.ResponseWriter is the response at any request
  */
 func GetMessageHandler(w http.ResponseWriter, r *http.Request) {
-	// retrieve the parameters from the router
+	// retrieves the parameters from the request
 	vars := mux.Vars(r)
 	msgID := vars["msgID"]
 	//fmt.Fprintln(w, "message ID: ", msgID)
@@ -73,7 +75,7 @@ func GetMessageHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	msg := GetMessageDB(iMsgID)
-	// Encode the msg to JSON in the header
+	// Encode the msg to JSON in the response header
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(msg); err != nil {
@@ -101,20 +103,22 @@ func StoreMessageHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get from the body the plain texte
 	content := string(body)
-	fmt.Fprintln(w, "message in the body: \n", content)
+	//fmt.Fprintln(w, "message in the body: \n", content)
 	message.Content = content
 
-	if err := json.Unmarshal(body, &message); err != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(422) // respond with the status 422 and send back the err msg in JSON
-		if err := json.NewEncoder(w).Encode(err); err != nil {
-			panic(err)
+	// We can use this snippet code if the body is JSON format
+	/*
+		if err := json.Unmarshal(body, &message); err != nil {
+			w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+			w.WriteHeader(422) // respond with the status 422 and send back the err msg in JSON
+			if err := json.NewEncoder(w).Encode(err); err != nil {
+				panic(err)
+			}
 		}
-	}
+	*/
 
 	// From fake DB, storage the given message
 	msg := StoreMessageDB(message)
-	fmt.Fprintln(w, "message to store: ", msg)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(msg); err != nil {

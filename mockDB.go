@@ -3,13 +3,14 @@
  */
 package main
 
-var currentID int = 1
+var currentID = 0
 var listMessages Messages
 
-// Give us some seed data
+// Some datas to store
 func init() {
 	StoreMessageDB(Message{Content: "Message XXXX"})
 	StoreMessageDB(Message{Content: "Message YYYY"})
+	StoreMessageDB(Message{Content: "my test message to store"})
 }
 
 /*
@@ -22,7 +23,7 @@ func GetMessageDB(id int) Message {
 		}
 	}
 	// return empty Todo if not found
-	return Message{Content: "there's no message stored"}
+	return Message{Content: "NULL"}
 }
 
 /*

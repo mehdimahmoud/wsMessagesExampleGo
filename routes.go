@@ -34,8 +34,14 @@ var routes = Routes{
 	Route{
 		"IndexMessagesHandler",
 		"GET",
-		"/messages",
+		"/messages/test",
 		IndexMessagesHandler,
+	},
+	Route{
+		"MessagesHandler",
+		"GET",
+		"/messages",
+		MessagesHandler,
 	},
 	Route{
 		"GetMessageHandler",
