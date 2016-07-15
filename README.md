@@ -1,5 +1,5 @@
 # wsMessagesExampleGo
-This is un example to implement a web service for sending a plain texte and storing it on any receptacle (at you to implement a database model).
+This is an example where a web service is implemented for sending a plain texte and storing it on any receptacle (at you to implement a database model).
 
 Some basic refactoring of the main package has given 5 files :
 
