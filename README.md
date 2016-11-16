@@ -21,7 +21,9 @@ Allows to define each route with their name, method and URI pattern.
 6. mockDB.go <br>
 Used for mockup the database with a starter datas set and to store incrementally the new message. It didn't used to persist the datas after each reboot of the server.      
 
-# How to test (after installing the wsMessagesExampeGo package and the server launched)
+# How to test <br>
+You should install the wsMessagesExampleGo package and make sure the server is launched<br><br>
+
 1. To test mockup datas <br>
 curl http://localhost:8080/messages/test
 
